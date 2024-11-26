@@ -1,0 +1,130 @@
+# Wenjun Zhou  07/01/2023
+# Adapted from snakemake tutorial Quip page by Joana Meier. 
+# Snakemake pipeline for genomic sequencing data preprocessing and SNPs calling. 
+# Performed on node Butterfly-1. 
+# Use "snakemake -np" to dry-run and test this script everytime before actually running it. 
+# Use "snakemake --dag | dot -Tsvg > dag.svg" to draw a DAG figure of the whole pipeline. 
+# Changing values of "SAMPLE", "PATH" and "RAWPATH" only should be enough to adapt this pipeline to new dataset. 
+
+SAMPLE=["CAM006245","CAM006248","CAM006260","CAM006261","CAM006262","CAM006263","CAM006264","CAM006265","CAM006278","CAM006280","CAM006281","CAM006283","CAM006287","CAM006289","CAM006290","CAM006298","CAM006305","CAM006307","CAM006308","CAM006309","CAM006313","CAM006319","CAM006322","CAM006323","CAM006327","CAM006328","CAM006329","CAM006701","CAM006702","CAM006704","CAM006705","CAM006706","CAM006708","CAM006711","CAM006712","CAM006713","CAM006714","CAM006716","CAM006717","CAM006718","CAM006719","CAM006720","CAM006721","CAM006722","CAM006724","CAM006725","CAM006726","CAM006727","CAM006728","CAM006729","CAM006730","CAM006731","CAM006732","CAM006741","CAM006742","CAM006743","CAM006744","CAM006745","CAM006746","CAM006748","CAM006757","CAM006761","CAM006765","CAM006766","CAM006767","CAM006768","CAM006770","CAM006772","CAM006773","CAM006774","CAM006776","CAM006788","CAM006793","CAM006796","CAM006803","CAM006805","CAM006807","CAM006809","CAM006811","CAM006812","CAM006813","CAM006814","CAM006815","CAM006816","CAM006817","CAM006819","CAM006820","CAM006825","CAM006829","CAM006830","CAM006831","CAM006832","CAM006833","CAM006834","CAM006835","CAM006836","CAM006841","CAM006842","CAM006843","CAM006844","CAM006847","CAM006848","CAM006850","CAM006853","CAM006854","CAM006855","CAM006856","CAM006857","CAM006858","CAM006859","CAM006860","CAM006877","CAM006884","CAM006890","CAM006894","CAM006895","CAM006896","CAM006897","CAM006898","CAM006899","CAM006900","CAM006901","CAM006902","CAM006903","CAM006906","CAM006907","CAM006908","CAM006909","CAM006911","CAM006912","CAM006913","CAM006914","CAM006917","CAM006918","CAM006919","CAM006920","CAM006921","CAM006922","CAM006924","CAM006926","CAM006930","CAM006931","CAM006932","CAM006936","CAM006940","CAM006941","CAM006942","CAM006944","CAM006945","CAM006946","CAM006948","CAM006950","CAM006951","CAM006952","CAM006958","CAM006965","CAM006966","CAM006969","CAM006970","CAM006972","CAM006973","CAM006977","CAM006978","CAM006979","CAM006982","CAM006985","CAM006986","CAM006987","CAM006989","CAM006990","CAM006991","CAM006992","CAM006993","CAM006994","CAM006995","CAM006996","CAM006997","CAM006998","CAM006999","CAM007000","CAM007001","CAM007002","CAM007003","CAM007004","CAM007005","CAM007006","CAM007007","CAM007008","CAM007009","CAM007010","CAM007011","CAM007012","CAM007013","CAM007014","CAM007015","CAM007016","CAM007017","CAM007018","CAM007019","CAM007021","CAM007023","CAM007024","CAM007025","CAM007026","CAM007027","CAM007028","CAM007029","CAM007030","CAM007031","CAM007032","CAM007033","CAM007034","CAM007035","CAM007036","CAM007037","CAM007038","CAM007039","CAM007040","CAM007041","CAM007042","CAM007043","CAM007044","CAM007045","CAM007046","CAM007047","CAM007048","CAM007049","CAM007050","CAM007051","CAM007052","CAM007053","CAM007054","CAM007055","CAM007056","CAM007057","CAM007058","CAM007059","CAM007060","CAM007061","CAM007062","CAM007063","CAM007064","CAM007065","CAM007066","CAM007067","CAM007068","CAM007069","CAM007070","CAM007071","CAM007072","CAM007073","CAM007074","CAM007075","CAM007076","CAM007077","CAM007078","CAM007079","CAM007080","CAM007081","CAM007082","CAM007083","CAM007084"]
+PATH=["/project_HerIll/wz345/output/snakemake_test"]
+RAWPATH=["/2.raw.bsf/"]
+
+# Rule that makes Snakemake run through the entire pipeline 
+# as it requires all output files of the very last step
+rule all:
+    input:
+        expand("{path}/bwa_mapped/bam_rmDup/{sample}_rmDup.bam.bai", sample=SAMPLE, path=PATH, rawpath=RAWPATH),
+    input:
+        expand("{path}/gvcf/{sample}.g.vcf", sample=SAMPLE, path=PATH, rawpath=RAWPATH)
+
+# Remove parts of reads that contain adapter sequences
+rule trimmomatic:
+    input:
+        "/2.raw.bsf/{sample}_EKDL220016421-1A_HJJF3DSX5_L2_1.fq.gz",
+        "/2.raw.bsf/{sample}_EKDL220016421-1A_HJJF3DSX5_L2_2.fq.gz"
+    output:
+        fp="{path}/trimmomatic/paired/{sample}_1_trimmed.fq.gz",
+        funp="{path}/trimmomatic/unpaired/{sample}_1_unpaired.fq.gz",
+        rp="{path}/trimmomatic/paired/{sample}_2_trimmed.fq.gz",
+        runp="{path}/trimmomatic/unpaired/{sample}_2_unpaired.fq.gz"
+    log:
+        "{path}/trimmomatic/logs/trimmomatic.log"
+    shell:
+        """
+        java -jar /usr/local/software/trimmomatic/0.39/trimmomatic-0.39.jar PE -threads 10 -phred33 \
+        -trimlog {log} {input} {output.fp} {output.funp} {output.rp} {output.runp} \
+        ILLUMINACLIP:/usr/local/software/trimmomatic/0.39/adapters/TruSeq3-PE-2.fa:2:30:10:2:keepBothReads \
+        LEADING:3 TRAILING:3 MINLEN:32
+        """
+
+# Mapping to the reference genome
+rule bwa_mapping:
+    input:
+        "/rds/project/cj107/rds-cj107-jiggins-rds/genomes/Hill/iHerIll2.primary_assembly.20191125.masked.fa",
+        "/rds/user/wz345/hpc-work/selection_trimmed_fq/trimmomatic/paired/{sample}_1_trimmed.fq.gz",
+        "/rds/user/wz345/hpc-work/selection_trimmed_fq/trimmomatic/paired/{sample}_2_trimmed.fq.gz"
+    output:
+        samo="{path}/bwa_mapped/sam_unsorted/{sample}.sam",
+        bamo="{path}/bwa_mapped/bam_sorted/{sample}.bam"
+    params:
+        rg="@RG\\tID:{sample}\\tPL:ILLUMINA\\tLB:{sample}\\tSM:{sample}\\tCN:JigginsLab"
+    log:
+        "{path}/bwa_mapped/logs/{sample}.bwa.log"
+    shell:
+        """
+        module load bwa-0.7.17-gcc-5.4.0-42mry2g
+        bwa mem -M -R "{params.rg}" -t 12 {input} > {output.samo}
+        java -jar /usr/local/Cluster-Apps/picard/2.9.2/picard.jar SortSam \
+        I={output.samo} O={output.bamo} SO=coordinate TMP_DIR=./tmp
+        """
+
+# Sorting sam files into bam files
+rule picard_sorting:
+    input:
+        "{path}/bwa_mapped/sam_unsorted/{sample}.sam"
+    output:
+        "{path}/bwa_mapped/bam_sorted/{sample}.bam"
+    shell:
+        """
+        java -jar /usr/local/Cluster-Apps/picard/2.9.2/picard.jar SortSam \
+        I={input} O={output} SO=coordinate TMP_DIR=./tmp
+        bgzip {input}
+        """
+
+# Index the bam files
+rule samtools_index:
+    input:
+        "{path}/bwa_mapped/bam_sorted/{sample}.bam"
+    output:
+        "{path}/bwa_mapped/bam_sorted/{sample}.bam.bai"
+    shell:
+        """
+        module load samtools-1.15-gcc-5.4.0-elpvwsy
+        samtools index {input}
+        """
+
+# Generate some stats for each bam file
+rule samtools_flagstat:
+    input:
+        "{path}/bwa_mapped/bam_sorted/{sample}.bam"
+    output:
+        "{path}/bwa_mapped/bam_sorted_flagstat/{sample}.flagstat"
+    shell:
+        """
+        module load samtools-1.15-gcc-5.4.0-elpvwsy
+        samtools flagstat {input} > {output}
+        """
+
+# Remove reads seem to be PCR or optical duplicates 
+rule remove_duplicates:
+    input:
+        ibam="{path}/bwa_mapped/bam_sorted/{sample}.bam",
+        bai="{path}/bwa_mapped/bam_sorted/{sample}.bam.bai"
+    output:
+        obam="{path}/bwa_mapped/bam_rmDup/{sample}_rmDup.bam",
+        met="{path}/bwa_mapped/bam_rmDup/{sample}_rmDup.bam.metrics"
+    shell:
+        """
+        java -Xmx5g -jar /usr/local/Cluster-Apps/picard/2.9.2/picard.jar MarkDuplicates \
+        REMOVE_DUPLICATES=true \
+        INPUT={input.ibam} OUTPUT={output.obam} METRICS_FILE={output.met}
+        """
+
+# Call SNPs based on the deduplicated bam files
+rule call_SNPs:
+    input:
+        "{path}/bwa_mapped/bam_rmDup/{sample}_rmDup.bam"
+    output:
+        bai="{path}/bwa_mapped/bam_rmDup/{sample}_rmDup.bam.bai",
+        vcf="{path}/gvcf/{sample}.g.vcf"
+    shell:
+        """
+        module load samtools-1.15-gcc-5.4.0-elpvwsy
+        samtools index {input}
+        java -Xmx5G -jar /usr/local/Cluster-Apps/gatk/3.7.0/GenomeAnalysisTK.jar -T HaplotypeCaller -nct 10 \
+        -R /rds/project/cj107/rds-cj107-jiggins-rds/genomes/Hill/iHerIll2.primary_assembly.20191125.masked.fa \
+        -ERC GVCF -variant_index_type LINEAR -variant_index_parameter 128000 \
+        -I {input} -o {output.vcf}
+        """
+

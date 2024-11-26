@@ -1,0 +1,25 @@
+Trait,Rep,Line,mean,sd,se,ci,PerChange
+Larval growth rate (mg/day),R1,Control,8.576984,5.008734,0.1453793,0.2852293,22.96684452
+Larval growth rate (mg/day),R1,Large,11.134146,5.59216,0.1632791,0.320352,
+Larval growth rate (mg/day),R2,Control,7.713574,3.308781,0.1012471,0.1986659,15.88006806
+Larval growth rate (mg/day),R2,Large,9.169734,3.61992,0.1100997,0.2160335,
+Larval growth rate (mg/day),R3,Control,8.061042,4.76501,0.1198768,0.2351345,8.472417028
+Larval growth rate (mg/day),R3,Large,8.807227,5.427021,0.1395679,0.2737674,
+Larval development time (5% PP; Days),R1,Control,0.9632431,NA,NA,NA,10.84411609
+Larval development time (5% PP; Days),R1,Large,0.8587879,NA,NA,NA,
+Larval development time (5% PP; Days),R2,Control,0.9481471,NA,NA,NA,5.203000674
+Larval development time (5% PP; Days),R2,Large,0.898815,NA,NA,NA,
+Larval development time (5% PP; Days),R3,Control,0.9645087,NA,NA,NA,6.936806272
+Larval development time (5% PP; Days),R3,Large,0.8976026,NA,NA,NA,
+Male pupal development time (hours),R1,Control,173.9412,NA,NA,NA,2.360510333
+Male pupal development time (hours),R1,Large,169.8353,NA,NA,NA,
+Male pupal development time (hours),R2,Control,168.46,NA,NA,NA,-3.815683248
+Male pupal development time (hours),R2,Large,174.8879,NA,NA,NA,
+Male pupal development time (hours),R3,Control,171.7895,NA,NA,NA,1.92712593
+Male pupal development time (hours),R3,Large,168.4789,NA,NA,NA,
+Female pupal development time (hours),R1,Control,179.6818,NA,NA,NA,-5.498998786
+Female pupal development time (hours),R1,Large,189.5625,NA,NA,NA,
+Female pupal development time (hours),R2,Control,174.2143,NA,NA,NA,-1.422386107
+Female pupal development time (hours),R2,Large,176.6923,NA,NA,NA,
+Female pupal development time (hours),R3,Control,173.2188,NA,NA,NA,-0.624181671
+Female pupal development time (hours),R3,Large,174.3,NA,NA,NA,

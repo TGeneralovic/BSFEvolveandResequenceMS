@@ -1,0 +1,72 @@
+---
+title: "HiInR_day28_split_by_lifestage_violinplot_chisq_test"
+author: "Leia Zhao"
+date: "2024-11-20"
+output: html_document
+---
+
+```{r}
+setwd("/Users/leiazhao/Desktop/BSF_MPhil_R_work")
+
+##HiInR day 28 plots split into panels by life stage
+
+library(ggplot2)
+library(tidyverse)
+library(ggpubr)
+library(rstatix)
+library(magrittr)
+library(corrplot)
+
+##boxplot for S6 all groups day 28 - with mean weights
+S6_ALL_SCREENED_DAY_28 <- read.csv("S6_ALL_SCREENED_DAY_28.csv")
+
+##change the P, PP, andd L in Lifestage to full names so they come up as words on plots 
+S6_ALL_SCREENED_DAY_28$Lifestage[S6_ALL_SCREENED_DAY_28$Lifestage == "P"] <- "Pupa"
+S6_ALL_SCREENED_DAY_28$Lifestage[S6_ALL_SCREENED_DAY_28$Lifestage == "PP"] <- "Prepupa"
+S6_ALL_SCREENED_DAY_28$Lifestage[S6_ALL_SCREENED_DAY_28$Lifestage == "L"] <- "Larva"
+
+
+##violin plot for screened samples, split into lifestages
+
+HiInR_DAY_28_violin <- ggplot(S6_ALL_SCREENED_DAY_28, aes(x = Group, y = Weight, fill  = Group))+
+  geom_violin()+
+  geom_jitter(aes(color=factor(KO_Guide_A)), 
+             size=0.8, alpha=0.9)+
+  scale_color_manual(values=c('black','red'), labels = c("No", "Yes"))+
+  stat_summary(fun.y = mean)+
+  ggtitle("HiInR CRISPR Day 28")+
+  labs(color = "HiInR Knockout")+
+  scale_x_discrete(labels = c("Control", "HiInR CRISPR"))+
+  scale_fill_discrete(labels = c("Control", "HiInR CRISPR"))
+
+
+HiInR_DAY_28_violin_split <- HiInR_DAY_28_violin + facet_grid(. ~ factor(Lifestage, levels = c("Pupa", "Prepupa", "Larva")))
+
+HiInR_DAY_28_violin_split
+
+
+##install the janitor package to count lifestage breakdown in crispr vs control group 
+install.packages("janitor")
+library(janitor)
+
+## make a dataframe out of this summary 
+Lifestage_Summary <- tabyl(S6_ALL_SCREENED_DAY_28, Lifestage, Group)
+Lifestage_Summary
+
+## edit the dataframe to be without the "Lifestage" column header but with lifestages as row names 
+library(tidyverse)
+Lifestage_Table <- Lifestage_Summary %>% remove_rownames %>% tibble::column_to_rownames(var="Lifestage")
+Lifestage_Table
+
+## finally run chi-squared test - this is a simple chi-sq that allow you to see details 
+Lifestage_chisq <- chisq.test(Lifestage_Table)
+Lifestage_chisq
+Lifestage_chisq$residuals
+
+## this is the same chi-sq test but generates a stats summary and signif scores 
+Lifestage_chisq_stats <- Lifestage_Table %>%
+  chisq_test(Lifestage ~ Group) %>%
+  add_significance()
+Lifestage_chisq_stats
+
+```

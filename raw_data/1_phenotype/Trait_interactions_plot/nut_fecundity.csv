@@ -1,0 +1,13 @@
+Trait,Rep,Line,mean,sd,se,ci,PerChange
+Protein content (mg/L),R1,Control,18.61834,1.752199,0.5058164,1.113294,22.63864789
+Protein content (mg/L),R1,Large,24.06672,1.720461,0.4966543,1.093129,
+Protein content (mg/L),R2,Control,13.89116,1.493213,0.5279307,1.248358,21.97581846
+Protein content (mg/L),R2,Large,17.80366,2.826236,0.9992255,2.362793,
+Protein content (mg/L),R3,Control,21.26325,5.699347,1.6452598,3.621192,-2.133181294
+Protein content (mg/L),R3,Large,20.81914,6.214543,2.1971729,5.195488,
+Ovary weight (mg),R1,Control,1.935,0.777496,0.1738534,0.3638793,52.86236297
+Ovary weight (mg),R1,Large,4.105,1.6548096,0.3700267,0.7744747,
+Ovary weight (mg),R2,Control,2.088333,1.1455203,0.4676567,1.2021498,25.0460312
+Ovary weight (mg),R2,Large,2.786154,0.9026031,0.2503371,0.5454376,
+Ovary weight (mg),R3,Control,5.290323,2.5301324,0.4544252,0.9280601,0.599354931
+Ovary weight (mg),R3,Large,5.322222,2.0475396,0.4826097,1.0182175,

@@ -1,0 +1,58 @@
+---
+title: "HiInR_Mutants_Only_Day28_welch_ttest"
+author: "Leia Zhao"
+date: "2024-11-20"
+output: html_document
+---
+
+```{r}
+##HiInR day 28 plots for just the positive screen mutants and control group!  
+
+setwd("/Users/leiazhao/Desktop/BSF_MPhil_R_work")
+
+## call packages 
+library(ggplot2)
+library(tidyverse)
+library(ggpubr)
+library(rstatix)
+library(magrittr)
+
+## read in the data frame 
+S6_DAY_28_MUTANTS <- read.csv("S6_DAY_28_MUTANTS.csv")
+
+##change the P, PP, andd L in Lifestage to full names so they come up as words on plots 
+S6_DAY_28_MUTANTS$Lifestage[S6_DAY_28_MUTANTS$Lifestage == "P"] <- "Pupa"
+S6_DAY_28_MUTANTS$Lifestage[S6_DAY_28_MUTANTS$Lifestage == "PP"] <- "Prepupa"
+S6_DAY_28_MUTANTS$Lifestage[S6_DAY_28_MUTANTS$Lifestage == "L"] <- "Larva"
+
+##violin plot for screened samples - with mean weights and legends
+HiInR_DAY_28_violin <- ggplot(S6_DAY_28_MUTANTS, aes(x = Group, y = Weight, fill  = Group))+
+  geom_violin()+
+  geom_jitter(aes(color=factor(KO_Guide_A)), 
+             size=0.8, alpha=0.9)+
+  scale_color_manual(values=c('black','red'), labels = c("No", "Yes"))+
+  scale_shape_manual(values = c(4,16)) +
+  stat_summary(fun.y = mean)+
+  ggtitle("HiInR CRISPR Day 28")+
+  labs(color = "HiInR Knockout")+
+  scale_x_discrete(labels = c("Control", "HiInR CRISPR"))+
+  scale_fill_discrete(labels = c("Control", "HiInR CRISPR"))
+
+HiInR_DAY_28_violin
+
+## stats for screened mutants and control group 
+S6_DAY_28_MUTANTS %>%
+  group_by(Group) %>%
+  get_summary_stats(Weight, type = "mean_sd")
+
+## run unpaired Welch's t-test 
+HiInR_stat.test <- S6_DAY_28_MUTANTS %>%
+  t_test(Weight ~ Group) %>%
+  add_significance()
+HiInR_stat.test
+
+## add t-test results to violin plots 
+HiInR_DAY_28_violin + labs(subtitle = get_test_label(HiInR_stat.test, detailed = TRUE))+
+  geom_signif(comparisons = list(c("S6_GA+B", "Cas9CTRLA+B")), map_signif_level = TRUE, annotations = c("****"))
+
+```

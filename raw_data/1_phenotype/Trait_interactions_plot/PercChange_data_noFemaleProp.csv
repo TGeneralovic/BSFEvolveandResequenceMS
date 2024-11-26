@@ -1,0 +1,61 @@
+Trait,Rep,Line,mean,sd,se,ci,PerChange
+Larval growth rate (mg/day),R1,Control,8.576984,5.008734,0.1453793,0.2852293,22.96684452
+Larval growth rate (mg/day),R1,Large,11.134146,5.59216,0.1632791,0.320352,
+Larval growth rate (mg/day),R2,Control,7.713574,3.308781,0.1012471,0.1986659,15.88006806
+Larval growth rate (mg/day),R2,Large,9.169734,3.61992,0.1100997,0.2160335,
+Larval growth rate (mg/day),R3,Control,8.061042,4.76501,0.1198768,0.2351345,8.472417028
+Larval growth rate (mg/day),R3,Large,8.807227,5.427021,0.1395679,0.2737674,
+Larval weight (12 DOL; mg),R1,Control,169.192,26.307402,3.037717,6.052783,16.56924811
+Larval weight (12 DOL; mg),R1,Large,202.79333,41.588523,4.802229,9.56865,
+Larval weight (12 DOL; mg),R2,Control,132.31867,25.913851,2.992274,5.962236,7.498098316
+Larval weight (12 DOL; mg),R2,Large,143.04427,49.632184,5.731031,11.419328,
+Larval weight (12 DOL; mg),R3,Control,163.183,29.48992,2.948992,5.85144,17.60847832
+Larval weight (12 DOL; mg),R3,Large,198.058,38.977526,3.897753,7.733987,
+Prepupal weight (21 DOL; mg),R1,Control,142.76133,24.655184,2.846935,5.672643,19.68992702
+Prepupal weight (21 DOL; mg),R1,Large,177.76267,31.24361,3.607701,7.188502,
+Prepupal weight (21 DOL; mg),R2,Control,106.36459,21.126356,2.455889,4.89458,17.54222716
+Prepupal weight (21 DOL; mg),R2,Large,128.9928,25.823095,2.981794,5.941355,
+Prepupal weight (21 DOL; mg),R3,Control,121.561,19.938526,1.993853,3.956236,17.29981631
+Prepupal weight (21 DOL; mg),R3,Large,146.99,20.25809,2.025809,4.019645,
+Protein content (mg/L),R1,Control,18.61834,1.752199,0.5058164,1.113294,22.63864789
+Protein content (mg/L),R1,Large,24.06672,1.720461,0.4966543,1.093129,
+Protein content (mg/L),R2,Control,13.89116,1.493213,0.5279307,1.248358,21.97581846
+Protein content (mg/L),R2,Large,17.80366,2.826236,0.9992255,2.362793,
+Protein content (mg/L),R3,Control,21.26325,5.699347,1.6452598,3.621192,-2.133181294
+Protein content (mg/L),R3,Large,20.81914,6.214543,2.1971729,5.195488,
+Larval development rate (5% PP; Days),R1,Control,0.9632431,NA,NA,NA,10.84411609
+Larval development rate (5% PP; Days),R1,Large,0.8587879,NA,NA,NA,
+Larval development rate (5% PP; Days),R2,Control,0.9481471,NA,NA,NA,5.203000674
+Larval development rate (5% PP; Days),R2,Large,0.898815,NA,NA,NA,
+Larval development rate (5% PP; Days),R3,Control,0.9645087,NA,NA,NA,6.936806272
+Larval development rate (5% PP; Days),R3,Large,0.8976026,NA,NA,NA,
+Male pupal development rate (hours),R1,Control,173.9412,NA,NA,NA,2.360510333
+Male pupal development rate (hours),R1,Large,169.8353,NA,NA,NA,
+Male pupal development rate (hours),R2,Control,168.46,NA,NA,NA,-3.815683248
+Male pupal development rate (hours),R2,Large,174.8879,NA,NA,NA,
+Male pupal development rate (hours),R3,Control,171.7895,NA,NA,NA,1.92712593
+Male pupal development rate (hours),R3,Large,168.4789,NA,NA,NA,
+Female pupal development rate (hours),R1,Control,179.6818,NA,NA,NA,-5.498998786
+Female pupal development rate (hours),R1,Large,189.5625,NA,NA,NA,
+Female pupal development rate (hours),R2,Control,174.2143,NA,NA,NA,-1.422386107
+Female pupal development rate (hours),R2,Large,176.6923,NA,NA,NA,
+Female pupal development rate (hours),R3,Control,173.2188,NA,NA,NA,-0.624181671
+Female pupal development rate (hours),R3,Large,174.3,NA,NA,NA,
+F7 Pupal size (cm^2),R1,Control,0.6520921,0.09056991,0.00207237,0.004064347,12.21405276
+F7 Pupal size (cm^2),R1,Large,0.7428206,0.13332515,0.002955493,0.005796108,
+F7 Pupal size (cm^2),R2,Control,0.6198561,0.08339931,0.001762919,0.003457129,16.64601159
+F7 Pupal size (cm^2),R2,Large,0.743643,0.09382333,0.00204302,0.004006545,
+F7 Pupal size (cm^2),R3,Control,0.6552064,0.09871153,0.002248094,0.004408952,16.51396721
+F7 Pupal size (cm^2),R3,Large,0.7848096,0.11453129,0.002547027,0.004995073,
+Pupal weight (mg),R1,Control,91.59216,9.6935,1.357361,2.726341,30.49566976
+Pupal weight (mg),R1,Large,131.77907,23.949615,3.652282,7.370604,
+Pupal weight (mg),R2,Control,83.6425,16.674391,5.895287,13.94014,25.63073063
+Pupal weight (mg),R2,Large,112.46917,9.688418,2.796805,6.155727,
+Pupal weight (mg),R3,Control,97.68571,11.956716,1.597783,3.20203,11.23273692
+Pupal weight (mg),R3,Large,110.047,11.445554,1.144555,2.271046,
+Ovary weight (mg),R1,Control,1.935,0.777496,0.1738534,0.3638793,52.86236297
+Ovary weight (mg),R1,Large,4.105,1.6548096,0.3700267,0.7744747,
+Ovary weight (mg),R2,Control,2.088333,1.1455203,0.4676567,1.2021498,25.0460312
+Ovary weight (mg),R2,Large,2.786154,0.9026031,0.2503371,0.5454376,
+Ovary weight (mg),R3,Control,5.290323,2.5301324,0.4544252,0.9280601,0.599354931
+Ovary weight (mg),R3,Large,5.322222,2.0475396,0.4826097,1.0182175,
